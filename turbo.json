@@ -1,15 +1,22 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "OPENAI_API_KEY"
+  ],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
     "lint": {
+      "dependsOn": [
+        "^lint"
+      ],
       "outputs": []
     },
+    "lint:fix": {},
     "dev": {
-      "cache": false
+      "cache": true
     }
   }
 }

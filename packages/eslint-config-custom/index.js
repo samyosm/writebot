@@ -1,8 +1,16 @@
 module.exports = {
-  extends: ["next", "turbo", "prettier"],
+  parser: '@typescript-eslint/parser',
+  extends: [ 'next', 'turbo', 'prettier', 'plugin:@typescript-eslint/recommended' ],
   rules: {
-    "object-curly-spacing": ["error", "always"],
-    "@next/next/no-html-link-for-pages": "off",
-    "react/jsx-key": "off",
-  },
+    'object-curly-spacing': [ 'error', 'always' ],
+    'array-bracket-spacing': [ 'error', 'always', { 'singleValue': false, 'objectsInArrays': false }],
+    '@next/next/no-html-link-for-pages': 'off',
+    '@typescript-eslint/object-curly-spacing': [ 'error', 'always' ],
+    'semi': [ 'error', 'always' ],
+    '@typescript-eslint/semi': [ 'error', 'always' ],
+    'quotes': [ 'error', 'single' ],
+    '@typescript-eslint/quotes': [ 'error', 'single' ],
+    'react/jsx-key': 'off',
+    'comma-dangle': [ 'error', 'never' ]
+  }
 };
