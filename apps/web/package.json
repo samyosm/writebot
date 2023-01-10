@@ -13,7 +13,9 @@
     "next": "13.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "ui": "*"
+    "ui": "*",
+    "@writerjs/youtube-comment-writer": "*",
+    "@writerjs/tweet-writer": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
