@@ -1,5 +1,8 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
+  ecmaFeatures:  {
+    'jsx':  true
+  },
   extends: [ 'next', 'turbo', 'prettier', 'plugin:@typescript-eslint/recommended' ],
   rules: {
     'object-curly-spacing': [ 'error', 'always' ],

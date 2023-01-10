@@ -1,12 +1,18 @@
 import { Button } from 'ui';
-import { WriteTweet } from 'writerjs';
+import { TweetWriter, Writer, YoutubeCommentWriter } from 'writerjs';
 import { GetStaticProps } from 'next';
 
 
 export const getStaticProps: GetStaticProps = async () => {
-  const tweet = await WriteTweet({
-    description: 'A tweet about AI',
-    tone: 'In fear'
+
+  Writer.initialize([
+    TweetWriter
+  ]);
+
+  const tweet = await Writer.write(YoutubeCommentWriter, {
+    videoTitle: 'Turborepo Tutorial | Part 1 - Typescript, Eslint, Tailwind, Husky shared config setup in a Monorepo',
+    commentDescription: 'A comment that shows unappreciation.',
+    tone: 'Angry'
   });
 
   return {
