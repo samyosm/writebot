@@ -5,9 +5,12 @@ import { GetStaticProps } from 'next';
 
 export const getStaticProps: GetStaticProps = async () => {
 
-  Writer.initialize([
-    TweetWriter
-  ]);
+  Writer.initialize({
+    apiKey: process.env.OPENAI_API_KEY as string,
+    types: [
+      TweetWriter
+    ]
+  });
 
   const tweet = await Writer.write(YoutubeCommentWriter, {
     videoTitle: 'Turborepo Tutorial | Part 1 - Typescript, Eslint, Tailwind, Husky shared config setup in a Monorepo',
