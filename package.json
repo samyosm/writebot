@@ -12,7 +12,8 @@
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "publish-package": "turbo run build lint --filter=./packages/* --parallel && changeset version && changeset publish"
+    "publish-package": "turbo run build lint --filter=./packages/* --parallel && changeset version && changeset publish",
+    "build-package": "turbo run build lint --filter=./packages/* --parallel"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
