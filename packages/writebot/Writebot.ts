@@ -1,7 +1,7 @@
-import { assert, Infer, object, string, Struct, StructError } from 'superstruct';
+import { assert, Infer, Struct, StructError } from 'superstruct';
 import { OpenAI } from './openai';
 
-export class Writer {
+export class Writebot {
   private static types: WriterType[] | null;
   private static openai: OpenAI;
 
@@ -14,7 +14,7 @@ export class Writer {
   static async write(type: WriterType | string, params: unknown) {
     let writerType;
     if (typeof type === 'string') {
-      writerType = Writer.types?.find(value => value.config.type === type);
+      writerType = Writebot.types?.find(value => value.config.type === type);
 
       if (writerType === undefined) {
         throw new Error(`Type ${type} not found.`);

@@ -1,1 +1,2 @@
-export * from './Writer';
+export * from './Writebot';
+export { Writebot as default } from './Writebot';
