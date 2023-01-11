@@ -5,7 +5,7 @@ export class Writer {
   private static types: WriterType[] | null;
   private static openai: OpenAI;
 
-  static initialize({ apiKey, types }: { apiKey: string, types?: WriterType[] }) {
+  static initialize({ apiKey, types }: { apiKey: string, types?: any[] }) {
     this.openai = new OpenAI(apiKey);
     this.types = types ? types : null;
   }

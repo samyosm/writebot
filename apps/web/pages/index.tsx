@@ -1,5 +1,5 @@
 import { Button } from 'ui';
-import { Writer } from 'writebot';
+import { Writer, WriterType } from 'writebot';
 import { GetStaticProps } from 'next';
 import YoutubeCommentWriter from 'youtube-comment-gen';
 import TweetWriter from 'tweet-gen';
@@ -9,14 +9,14 @@ export const getStaticProps: GetStaticProps = async () => {
   Writer.initialize({
     apiKey: process.env.OPENAI_API_KEY as string,
     types: [
-      TweetWriter
+      TweetWriter,
+      YoutubeCommentWriter
     ]
   });
 
-  const tweet = await Writer.write(YoutubeCommentWriter, {
-    videoTitle: 'Turborepo Tutorial | Part 1 - Typescript, Eslint, Tailwind, Husky shared config setup in a Monorepo',
-    commentDescription: 'A comment that shows unappreciation.',
-    tone: 'Angry'
+  const tweet = await Writer.write('tweet', {
+    description: 'A comment that shows extreme appreciation.',
+    tone: 'In love'
   });
 
   return {
