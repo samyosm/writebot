@@ -14,8 +14,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "ui": "*",
-    "@writerjs/youtube-comment-writer": "*",
-    "@writerjs/tweet-writer": "*"
+    "youtube-comment-gen": "*",
+    "tweet-gen": "*",
+    "writebot": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

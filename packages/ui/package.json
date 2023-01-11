@@ -4,6 +4,7 @@
   "main": "./index.tsx",
   "types": "./index.tsx",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
     "lint:fix": "TIMING=1 eslint \"**/*.ts*\" --fix"

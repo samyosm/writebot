@@ -1,5 +1,5 @@
 import { Infer, object, string } from 'superstruct';
-import { WriterType } from 'writerjs';
+import { WriterType } from '../writebot';
 
 const YoutubeCommentWriter: WriterType = {
   config: {

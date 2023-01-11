@@ -1,8 +1,8 @@
 {
-  "name": "writerjs",
-  "version": "0.0.0",
-  "main": "index.ts",
-  "types": "index.ts",
+  "name": "writebot",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
     "lint": "TIMING=1 eslint \"**/*.ts*\"",

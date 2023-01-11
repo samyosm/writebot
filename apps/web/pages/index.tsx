@@ -1,8 +1,8 @@
 import { Button } from 'ui';
-import { Writer } from 'writerjs';
+import { Writer } from 'writebot';
 import { GetStaticProps } from 'next';
-import YoutubeCommentWriter from '@writerjs/youtube-comment-writer';
-import TweetWriter from '@writerjs/tweet-writer/';
+import YoutubeCommentWriter from 'youtube-comment-gen';
+import TweetWriter from 'tweet-gen';
 
 export const getStaticProps: GetStaticProps = async () => {
 

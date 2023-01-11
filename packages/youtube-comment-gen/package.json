@@ -1,6 +1,6 @@
 {
-  "name": "@writerjs/youtube-comment-writer",
-  "version": "0.0.0",
+  "name": "youtube-comment-gen",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
