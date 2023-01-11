@@ -8,7 +8,9 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
-    "publish-package": {},
+    "publish-package": {
+      "inputs": []
+    },
     "lint": {
       "dependsOn": [
         "^lint"
