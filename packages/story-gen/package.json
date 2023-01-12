@@ -1,0 +1,22 @@
+{
+  "name": "story-gen",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "TIMING=1 eslint \"**/*.ts*\"",
+    "lint:fix": "TIMING=1 eslint \"**/*.ts*\" --fix",
+    "build": "tsup *.ts --format cjs --dts\n"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "*",
+    "tsconfig": "*",
+    "typescript": "^4.5.2",
+    "tsup": "^6.5.0"
+  },
+  "dependencies": {
+    "superstruct": "^1.0.3"
+  }
+}
