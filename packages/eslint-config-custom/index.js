@@ -4,6 +4,7 @@ module.exports = {
     'jsx':  true
   },
   extends: [ 'next', 'turbo', 'prettier', 'plugin:@typescript-eslint/recommended' ],
+  ignorePatterns: ['**/dist/*'],
   rules: {
     'object-curly-spacing': [ 'error', 'always' ],
     'array-bracket-spacing': [ 'error', 'always', { 'singleValue': false, 'objectsInArrays': false }],

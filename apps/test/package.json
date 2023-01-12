@@ -1,0 +1,15 @@
+{
+  "name": "test-package",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "ui": "*",
+    "youtube-comment-gen": "*",
+    "tweet-gen": "*",
+    "writebot": "*"
+  }
+}

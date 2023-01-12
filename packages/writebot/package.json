@@ -1,6 +1,10 @@
 {
   "name": "writebot",
+<<<<<<< HEAD
   "version": "0.3.0",
+=======
+  "version": "0.3.4",
+>>>>>>> 3e183be (Stopped using default export)
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",

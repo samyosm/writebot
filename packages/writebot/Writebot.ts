@@ -14,7 +14,7 @@ export class Writebot {
   static async write(type: WriterType | string, params: unknown) {
     let writerType;
     if (typeof type === 'string') {
-      writerType = Writebot.types?.find(value => value.config.type === type);
+      writerType = this.types?.find(value => value.config.type === type);
 
       if (writerType === undefined) {
         throw new Error(`Type ${type} not found.`);
@@ -37,5 +37,4 @@ export class Writebot {
     return this.openai.createDavinciCompletion({ prompt });
   }
 }
-
-export type WriterType= { makeQuery: (params: unknown) => string, config: { type: string, params: Struct<any, object> } };
+export type WriterType = { makeQuery: (params: unknown) => string, config: { type: string, params: Struct<any, object> } };

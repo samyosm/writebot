@@ -1,5 +1,5 @@
 import { Button } from 'ui';
-import { Writer, WriterType } from 'writebot';
+import Writer from 'writebot';
 import { GetStaticProps } from 'next';
 import YoutubeCommentWriter from 'youtube-comment-gen';
 import TweetWriter from 'tweet-gen';

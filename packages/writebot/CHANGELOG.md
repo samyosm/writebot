@@ -1,5 +1,32 @@
 # writerjs
 
+<<<<<<< HEAD
+=======
+## 0.3.4
+
+### Patch Changes
+
+- Stopped exporting default
+
+## 0.3.3
+
+### Patch Changes
+
+- Another attempt at fixing that export bug
+
+## 0.3.2
+
+### Patch Changes
+
+- Another attempt at fixing an export bug
+
+## 0.3.1
+
+### Patch Changes
+
+- Fixed issue were it didn't export default
+
+>>>>>>> 3e183be (Stopped using default export)
 ## 0.3.0
 
 ### Minor Changes
