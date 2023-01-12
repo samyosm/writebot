@@ -1,12 +1,12 @@
 import { Button } from 'ui';
-import Writer from 'writebot';
+import { Writebot } from 'writebot';
 import { GetStaticProps } from 'next';
 import YoutubeCommentWriter from 'youtube-comment-gen';
 import TweetWriter from 'tweet-gen';
 
 export const getStaticProps: GetStaticProps = async () => {
 
-  Writer.initialize({
+  Writebot.initialize({
     apiKey: process.env.OPENAI_API_KEY as string,
     types: [
       TweetWriter,
@@ -14,7 +14,7 @@ export const getStaticProps: GetStaticProps = async () => {
     ]
   });
 
-  const tweet = await Writer.write('tweet', {
+  const tweet = await Writebot.write('tweet', {
     description: 'A comment that shows extreme appreciation.',
     tone: 'In love'
   });
