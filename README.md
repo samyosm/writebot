@@ -1,73 +1,95 @@
-# Turborepo starter
+# Writebot Library
 
-This is an official Yarn v1 starter turborepo.
+Writebot is a Node.js library that enables developers to generate text using AI. Using Writebot, developers can create their own custom text generation presets to fit their specific needs.
 
-## What's inside?
+## Overview
 
-This turborepo uses [Yarn](https://classic.yarnpkg.com/) as a package manager. It includes the following packages/apps:
+Writebot works by taking a preset and a set of parameters and producing text with the corresponding AI. 
 
-### Apps and Packages
+However, developers can also create their own custom presets to fit their needs.
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+## Installation
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+To install Writebot, use the following command:
 
-### Utilities
+`npm install writebot`
+or
+`yarn add writebot`
 
-This turborepo has some additional tools already setup for you:
+## Usage
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+Writebot is a Node.js library and can be used in any Node.js project. To use Writebot, import the library and the desired preset:
 
-### Build
+To generate text with the desired preset first get your API Key from openai, then use the `write` method and pass in the preset name or object and the parameters:
 
-To build all apps and packages, run the following command:
+### Getting an API Key
 
+1. Visit OpenAI's website (https://openai.com/) and create an account.
+
+2. Click on the "Applications" tab in the top right corner of the website.
+
+3. Select "GPT-3 OpenAI API" and click "Create Application".
+
+4. Enter the details of your application, such as name, description, and purpose.
+
+5. Agree to the terms and conditions, create an API key, and click "Create".
+
+6. You will now see your GPT-3 OpenAI API key in the "Application" page.
+
+### Using the preset object
+
+```js
+const {Writebot} = require('writebot');
+const TweetGen = require('tweet-gen');
+
+Writebot.initialize({
+    // You can get this at openai
+    apiKey: 'API_KEY',
+})
+
+const tweet = Writebot.write(TweetGen, {
+  description: 'A tweet about AIs',
+  tone: 'Afraid'
+});
 ```
-cd my-turborepo
-yarn run build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-yarn run dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
-```
-npx turbo link
+Result:
+```text
+I'm scared of the way #AI is taking over our world. It feels like our humanity is being taken away from us, one algorithm at a time. #AIisComing
 ```
 
-## Useful Links
+### Using the preset name
+Or if you would like to use string to identify preset you could do it like this:
+```js
+const Writebot = require('writebot');
 
-Learn more about the power of Turborepo:
+Writebot.initialize({
+    apiKey: 'API_KEY',
+    // Add the presets you would like to use here.
+    types: [
+        require('tweet-gen')
+    ]
+})
 
-- [Pipelines](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+const tweet = Writebot.write('tweet', {
+  description: 'A tweet meme about developers.',
+  tone: 'Sarcastic'
+});
+```
+Result:
+```text
+Developers: Always finding new and creative ways to break things. #ProgrammingProblems
+```
+
+This will generate a tweet about AIs with an "afraid" tone.
+
+## Presets
+Note: if you are interested, you can issue a pull request with the presets you developed here.
+
+Currently, Writebot has the following presets available on NPM:
+
+* tweet-gen
+* youtube-comment-gen
+
+## License
+
+Writebot is released under the MIT License. See [LICENSE](https://github.com/writebot/writebot/blob/master/LICENSE) for details.
