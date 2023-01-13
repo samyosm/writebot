@@ -1,8 +1,9 @@
 import { Infer, object, string } from 'superstruct';
+import { Preset } from 'writebot';
 
 const config = {
-  type: 'youtube_comment',
-    params: object({
+  preset: 'youtube-comment-gen',
+  params: object({
     videoTitle: string(),
     commentDescription: string(),
     tone: string()
@@ -18,4 +19,6 @@ const makeQuery = ({ tone, commentDescription, videoTitle }: Infer<typeof config
   `;
 };
 
-export { config, makeQuery };
+const YoutubeCommentGen: Preset = { config, makeQuery };
+
+export default YoutubeCommentGen;
