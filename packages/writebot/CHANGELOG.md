@@ -1,5 +1,11 @@
 # writerjs
 
+## 0.5.0
+
+### Minor Changes
+
+- e531c5e: Added a story-generator. Fixed typescript bug
+
 ## 0.4.0
 
 ### Minor Changes
