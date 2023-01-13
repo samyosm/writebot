@@ -1,8 +1,9 @@
 import { Infer, object, string } from 'superstruct';
+import { Preset } from 'writebot';
 
 const config = {
-  type: 'tweet',
-    params: object({
+  preset: 'tweet',
+  params: object({
     description: string(),
     tone: string()
   })
@@ -17,4 +18,6 @@ const makeQuery = ({ tone, description }: Infer<typeof config.params>) => {
   `;
 };
 
-export { config, makeQuery };
+const TweetGen: Preset = { config, makeQuery };
+
+export default TweetGen;
