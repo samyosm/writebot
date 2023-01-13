@@ -1,5 +1,11 @@
 # story-gen
 
+## 0.2.0
+
+### Minor Changes
+
+- e531c5e: Added a story-generator. Fixed typescript bug
+
 ## 0.1.0
 
 ### Minor Changes
