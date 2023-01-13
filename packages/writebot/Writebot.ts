@@ -34,17 +34,21 @@ export class Writebot {
     }
   }
 
-  static async write(rawPreset: Preset | string, params: unknown) {
+  static write = async (rawPreset: Preset | string, params: unknown)  => {
     const preset = this.getPreset(rawPreset);
     this.validatePreset(preset, params);
 
     const prompt = preset.makeQuery(params as Infer<typeof preset.config.params>);
 
     if (Array.isArray(prompt)) {
-      return prompt.map(q => this.openai.createDavinciCompletion({ prompt: q }));
+      const response = prompt.map((q, i) => this.openai.createDavinciCompletion({ prompt: `${q}${i === prompt.length - 1 ? '<|endoftext|>': ''}` }));
+      const all = Promise.all(response);
+      const actual = await all;
+      console.log(actual.map(value => value.data.choices[0].text).join('\n'));
+      return actual;
     }
 
     return this.openai.createDavinciCompletion({ prompt });
-  }
+  };
 }
 export type Preset = { makeQuery: (params: unknown) => string | string[], config: { preset: string, params: Struct<any, object> } };

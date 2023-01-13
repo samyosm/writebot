@@ -1,44 +1,20 @@
-import { array, Infer, object, string } from 'superstruct';
+import { array, Infer, object, optional, string } from 'superstruct';
 
-
-// TODO: Instead of generating request as writebot currently allows, you could generate certain aspects, then feed those to the AI to generate even better stories.
-
-const relationship = object({
-  character: string(),
-  relation: string()
-});
-
-const character = object({
-  name: string(),
-  personality: string(),
-  relationships: array(relationship)
-});
-
-const plotStruct = object({
-  characters: array(character), // Involved characters
-  startingSentence: string(),
+const storyStruct = object({
+  characters: string(),
   location: string(),
-  style: string(),
-  emotion: string(), // Conveyed emotions
-  other: string()
+  action: string(),
+  reason: string(),
+  themes: string()
 });
 
 const config = {
   type: 'story-gen',
-    params: object({
-      plots: array(plotStruct)
-  })
+  params: storyStruct
 };
 
-const makePlotQuery = ({ characters, emotion, location,startingSentence,style,other } : Infer<typeof plotStruct>) => {
-  return `
-  Generate one or two paragraphs for a story starting with ${startingSentence} using the following characters ${characters.map(c => `Name: ${c.name}, Personality ${c.personality}; `)} at ${location},
-  this section should convey the following emotion: ${emotion}, it should be written in the following style: ${style}. Here are other information about this: ${other}.
-  `;
-};
-
-const makeQuery = ({ plots  }: Infer<typeof config.params>) => {
-  return plots.map(makePlotQuery);
+const makeQuery = ({ action, reason, themes, location, characters }: Infer<typeof config.params>) => {
+  return `Write a 3000 words story set in ${location}, where ${characters}, must ${action} because ${reason}. The story should include diverse characters each with their own unique backstory and motivations. The plot should be filled with ${themes} and be made of an introduction, a conflict, a few paragraphs of rising actions, a few paragraphs for a climax were the tension is the highest, a few paragraphs of falling actions, and a resolution. The story should also have a lot of plot twists, unexpected turns, and moments of high tension, and should have a final resolution for all the characters. Do not write headings.`;
 };
 
 export { config, makeQuery };
