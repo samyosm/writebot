@@ -14,7 +14,7 @@ export class OpenAI {
     });
     this.openai = new OpenAIApi(configuration);
   }
-  createDavinciCompletion = async ({ prompt, maxToken = 144, temperature = 0.7 }: DavinciCompletion) => {
+  createDavinciCompletion = async ({ prompt, maxToken = 3000, temperature = 0 }: DavinciCompletion) => {
     return await this.openai.createCompletion({
       model: 'text-davinci-003',
       prompt,

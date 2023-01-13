@@ -51,4 +51,4 @@ export class Writebot {
     return this.openai.createDavinciCompletion({ prompt });
   };
 }
-export type Preset = { makeQuery: (params: unknown) => string | string[], config: { preset: string, params: Struct<any, object> } };
+export type Preset = { makeQuery: (params: any) => string | string[], config: { preset: string, params: Struct<any, object> } };
