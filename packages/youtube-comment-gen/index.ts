@@ -2,7 +2,7 @@ import { Infer, object, string } from 'superstruct';
 import { Preset } from 'writebot';
 
 const config = {
-  preset: 'youtube_comment',
+  preset: 'youtube-comment-gen',
   params: object({
     videoTitle: string(),
     commentDescription: string(),

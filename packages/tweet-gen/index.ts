@@ -2,7 +2,7 @@ import { Infer, object, string } from 'superstruct';
 import { Preset } from 'writebot';
 
 const config = {
-  preset: 'tweet',
+  preset: 'tweet-gen',
   params: object({
     description: string(),
     tone: string()
