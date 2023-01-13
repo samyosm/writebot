@@ -1,7 +1,14 @@
 # writerjs
 
-<<<<<<< HEAD
-=======
+## 0.4.0
+
+### Minor Changes
+
+- 3417ab4: Added a story-generator. Fixed typescript bug
+- 3417ab4: Added ability to use Arrays and thus send multiple request (for each element of that array)
+
+# <<<<<<< HEAD
+
 ## 0.3.4
 
 ### Patch Changes
@@ -26,7 +33,8 @@
 
 - Fixed issue were it didn't export default
 
->>>>>>> 3e183be (Stopped using default export)
+> > > > > > > 3e183be (Stopped using default export)
+
 ## 0.3.0
 
 ### Minor Changes
