@@ -1,5 +1,11 @@
 # story-gen
 
+## 0.3.0
+
+### Minor Changes
+
+- 33d04ff: Added features
+
 ## 0.2.0
 
 ### Minor Changes
