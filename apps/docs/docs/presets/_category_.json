@@ -1,0 +1,10 @@
+{
+  "label": "Presets",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "Learn about the presets we've already made."
+  }
+}

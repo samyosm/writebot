@@ -1,0 +1,87 @@
+---
+sidebar_position: 1
+---
+
+# Using Writebot
+
+There is two ways of using Writebot, you can either use a preset object, or you could use a preset name.
+In any case, before using Writebot, you would have to initialize it with an API Key from openai and optionally your preset objects.
+
+## Initializing
+
+Initializing Writebot is done using the initialize method like such:
+
+```typescript
+const { Writebot } = require('writebot');
+
+Writebot.initialize({
+  apiKey: API_KEY, // Insert your API Key here.
+});
+```
+
+If you are planning on calling your presets by their name instead of their objects, you must also initialize Writebot with the presets' objects like so:
+
+```typescript
+const { Writebot } = require('writebot');
+
+Writebot.initialize({
+  apiKey: API_KEY, // Insert your API Key here.
+  presets: [
+    require('tweet-gen'),
+    require('youtube-comment-gen')
+  ]
+});
+```
+
+## Basic generation
+
+### Passing the preset object
+
+If you don't call Writebot dynamically, i.e. you are always calling the same preset, you can pass the preset object to Writebot directly like so:
+
+```typescript
+const { Writebot } = require('writebot');
+const TweetGen = require('tweet-gen');
+
+Writebot.initialize({
+  apiKey: API_KEY, // Insert your API Key here.
+});
+
+Writebot.write(TweetGen, {
+  description: 'A tweet about AIs',
+  tone: 'Afraid'
+});
+```
+
+The `write` function will return a promise with openai's response. Here is how you can get the text:
+
+```javascript
+const tweetResponse =  Writebot.write(TweetGen, {
+  description: 'A tweet about AIs',
+  tone: 'Afraid'
+});
+
+tweetResponse
+  .then(response => console.log(response.data.choices[0].text)); // This will log the tweet.
+```
+
+### Passing the preset name
+
+If you do call Writebot dynamically, i.e. you aren't calling the same preset, you can pass the preset name to Writebot directly like so:
+
+```typescript
+const { Writebot } = require('writebot');
+const TweetGen = require('tweet-gen');
+
+Writebot.initialize({
+  apiKey: API_KEY, // Insert your API Key here.,
+  presets: [
+    TweetGen,
+  ]
+});
+
+Writebot.write('tweet-gen', {
+  description: 'A tweet about AIs',
+  tone: 'Afraid'
+});
+```

@@ -1,0 +1,90 @@
+---
+sidebar_position: 2
+---
+
+# What is a preset?
+
+The preset is the query maker for Writebot.
+
+Writebot's job is to send a query to GPT-3 and give you the answer. A preset's job is to make the query Writebot will send.
+It will achieve this using the params you will provide them. Because it is important that a preset receives the good parameter, before making
+the query, Writebot will ensure the parameter received are the one the preset wants.
+
+Writebot will know what the right parameters are by validating the parameters using a validation library called [superstruct](https://docs.superstructjs.org).
+
+Furthermore, Writebot has the feature of being able to call a preset using its name. That name is provided in a config object alongside the params object.
+
+At the end, a preset is made of three things:
+- A `config` object with the preset's name and `params` object.
+- A `params` object to validate parameter.
+- A `makeQuery` function that makes the query.
+
+## Config
+
+The config object is a very simple object with only two elements in it: the preset's name and the params. Below is an example.
+
+```javascript
+const config = {
+    preset: 'movie-review-gen',
+    params // The param object described below
+}
+```
+
+## Params
+
+The `params` object has the job of specifying structure of the parameters `makeQuery` will need. For example, if `makeQuery` needs a tone, and a movie title to make the query,
+the params object might look something like this:
+
+```typescript
+import { object, string } from 'superstruct';
+
+const params = object({
+  tone: string(),
+  movieTitle: string(),
+});
+```
+
+## Make query
+
+The `makeQuery` function has the job of making the query from the parameters received. In the case above, to make a movie review query, it could look like this:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+```mdx-code-block
+<Tabs
+    defaultValue="javascript"
+    values={[
+        {label: 'Javascript', value: 'javascript'},
+        {label: 'Typescript', value: 'typescript'},
+    ]}>
+<TabItem value="javascript">
+```
+
+```javascript
+const makeQuery = ({ tone, movieTitle }) => {
+  return `
+  Generate a simple movie review for the movie title ${movieTitle} using the following tone ${tone}.
+  `;
+};
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="typescript">
+```
+
+```typescript
+import { Infer } from 'superstruct';
+
+const makeQuery = ({ tone, movieTitle }: Infer<typeof params>) => {
+  return `
+  Generate a simple movie review for the movie title ${movieTitle} using the following tone ${tone}.
+  `;
+};
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
