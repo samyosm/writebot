@@ -12,7 +12,7 @@ const config = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/logo.ico',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -58,10 +58,10 @@ const config = {
     ({
       navbar: {
         title: 'Writebot',
-/*        logo: {
+        logo: {
           alt: 'Writebot',
-          src: 'img/logo.svg'
-        },*/
+          src: 'img/logo.png'
+        },
         items: [
           {
             type: 'doc',
