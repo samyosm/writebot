@@ -1,0 +1,10 @@
+{
+  "label": "Guides",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "Quickly learn about the most important aspects of the Writebot API."
+  }
+}
