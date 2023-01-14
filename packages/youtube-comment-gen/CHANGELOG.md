@@ -1,5 +1,11 @@
 # @writerjs/youtube-comment-writer
 
+## 0.4.1
+
+### Patch Changes
+
+- ba5b2bc: Added README
+
 ## 0.4.0
 
 ### Minor Changes
