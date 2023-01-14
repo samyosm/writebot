@@ -9,7 +9,7 @@ const config = {
   title: 'Writebot',
   tagline: 'OpenAI text generation abstraction.',
   url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  baseUrl: '/writebot/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
