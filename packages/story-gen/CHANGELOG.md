@@ -1,5 +1,11 @@
 # story-gen
 
+## 0.3.1
+
+### Patch Changes
+
+- ba5b2bc: Added README
+
 ## 0.3.0
 
 ### Minor Changes

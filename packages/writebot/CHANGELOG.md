@@ -1,5 +1,11 @@
 # writerjs
 
+## 0.6.1
+
+### Patch Changes
+
+- ba5b2bc: Added README
+
 ## 0.6.0
 
 ### Minor Changes
