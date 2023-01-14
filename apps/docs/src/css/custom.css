@@ -5,7 +5,15 @@
  */
 
 /* You can override the default Infima variables here. */
+<<<<<<< HEAD
+<<<<<<< HEAD
 /*:root {
+=======
+:root {
+>>>>>>> 878cc89 (initialized Docusaurus)
+=======
+/*:root {
+>>>>>>> 82b2c6f (Added docs)
   --ifm-color-primary: #2e8555;
   --ifm-color-primary-dark: #29784c;
   --ifm-color-primary-darker: #277148;
@@ -17,7 +25,15 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 !* For readability concerns, you should choose a lighter palette in dark mode. *!
+=======
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+>>>>>>> 878cc89 (initialized Docusaurus)
+=======
+!* For readability concerns, you should choose a lighter palette in dark mode. *!
+>>>>>>> 82b2c6f (Added docs)
 [data-theme='dark'] {
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: #21af90;
@@ -27,6 +43,10 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 82b2c6f (Added docs)
 }*/
 
 :root {
@@ -51,4 +71,9 @@
   --ifm-color-primary-lighter: #8f8eff;
   --ifm-color-primary-lightest: #9f9dff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+<<<<<<< HEAD
+=======
+>>>>>>> 878cc89 (initialized Docusaurus)
+=======
+>>>>>>> 82b2c6f (Added docs)
 }
