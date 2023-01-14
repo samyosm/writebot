@@ -22,6 +22,7 @@ const config = {
 <<<<<<< HEAD
   title: 'Writebot',
   tagline: 'OpenAI text generation abstraction.',
+<<<<<<< HEAD
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/writebot/',
 =======
@@ -34,6 +35,10 @@ const config = {
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
 >>>>>>> 878cc89 (initialized Docusaurus)
+=======
+  url: 'https://writebot-osmium-dev.vercel.app',
+  baseUrl: '/',
+>>>>>>> 80c0e48 (Revereted to using / as baseUrl)
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
