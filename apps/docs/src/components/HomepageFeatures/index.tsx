@@ -12,6 +12,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: 'Easy to Use',
 <<<<<<< HEAD
+<<<<<<< HEAD
     Svg: require('@site/static/img/undraw_mindfulness_49je.svg').default,
     description: (
       <>
@@ -43,37 +44,42 @@ const FeatureList: FeatureItem[] = [
 function Feature({ title, Svg, description }: FeatureItem) {
 =======
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+=======
+    Svg: require('@site/static/img/undraw_mindfulness_49je.svg').default,
+>>>>>>> 82b2c6f (Added docs)
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Writebot was designed from the ground up to be easily installed and
+        used.
       </>
-    ),
+    )
   },
   {
     title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    Svg: require('@site/static/img/undraw_dev_focus_re_6iwt.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Writebot lets you abstract the complexity of making and sending request to OpenAI API.
       </>
-    ),
+    )
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Prevents type errors',
+    Svg: require('@site/static/img/undraw_bug_fixing_oc-7-a.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        You can define the structure of your parameters to ensure you always get what you want.
       </>
-    ),
-  },
+    )
+  }
 ];
 
+<<<<<<< HEAD
 function Feature({title, Svg, description}: FeatureItem) {
 >>>>>>> 878cc89 (initialized Docusaurus)
+=======
+function Feature({ title, Svg, description }: FeatureItem) {
+>>>>>>> 82b2c6f (Added docs)
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">

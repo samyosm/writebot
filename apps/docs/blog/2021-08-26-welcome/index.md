@@ -2,6 +2,7 @@
 slug: welcome
 title: Welcome
 <<<<<<< HEAD
+<<<<<<< HEAD
 tags: [hello, writebot]
 ---
 
@@ -30,3 +31,9 @@ The blog supports tags as well!
 
 **And if you don't want a blog**: just delete this directory, and use `blog: false` in your Docusaurus config.
 >>>>>>> 878cc89 (initialized Docusaurus)
+=======
+tags: [hello, writebot]
+---
+
+This section is soon to come. This blog will be filled with articles Writebot has written.
+>>>>>>> 82b2c6f (Added docs)
