@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Writebot',
   tagline: 'OpenAI text generation abstraction.',
-  url: 'https://writebot-osmium-dev.vercel.app',
+  url: 'https://writebot.app',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
