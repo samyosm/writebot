@@ -1,5 +1,11 @@
 # writerjs
 
+## 0.6.0
+
+### Minor Changes
+
+- 33d04ff: Added ability to use Arrays and thus send multiple request (for each element of that array)
+
 ## 0.5.0
 
 ### Minor Changes
