@@ -1,5 +1,13 @@
-import { assert, Infer, Struct, StructError } from 'superstruct';
+import { assert, func, Infer, object, string, Struct, StructError } from 'superstruct';
 import { OpenAI } from './openai';
+
+const Preset = object({
+  makeQuery: func(),
+  config: object({
+    preset: string(),
+    params: object()
+  })
+});
 
 export class Writebot {
   private static presets: Preset[] | null;
@@ -11,15 +19,19 @@ export class Writebot {
   }
 
   private static getPreset(preset: Preset | string) {
+    let writerType;
     if (typeof preset === 'string') {
-      const writerType = this.presets?.find(value => value.config.preset === preset);
+      writerType = this.presets?.find(value => value.config.preset === preset);
 
       if (writerType === undefined) {
-        throw new Error(`Type ${preset} not found.`);
+        throw new Error(`Preset ${preset} not found.`);
       }
-      return writerType;
+    } else {
+      writerType = preset;
     }
-    return preset;
+
+    if (!Preset.is(writerType)) throw new Error('Invalid preset');
+    return writerType;
   }
 
   private static validatePreset(preset: Preset, params: unknown) {
@@ -34,7 +46,9 @@ export class Writebot {
     }
   }
 
-  static write = async (rawPreset: Preset | string, params: unknown)  => {
+  static write = async (rawPreset: Preset | string, params: object)  => {
+    if (!this.openai) throw new Error('Not initialized');
+
     const preset = this.getPreset(rawPreset);
     this.validatePreset(preset, params);
 
@@ -51,4 +65,5 @@ export class Writebot {
     return this.openai.createDavinciCompletion({ prompt });
   };
 }
+
 export type Preset = { makeQuery: (params: any) => string | string[], config: { preset: string, params: Struct<any, object> } };
