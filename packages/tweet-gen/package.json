@@ -7,14 +7,18 @@
   "scripts": {
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
     "lint:fix": "TIMING=1 eslint \"**/*.ts*\" --fix",
-    "build": "tsup *.ts --format cjs --dts\n"
+    "build": "tsup *.ts --format cjs --dts\n",
+    "test": "jest"
   },
   "devDependencies": {
+    "@types/jest": "^29.2.5",
     "eslint": "^7.32.0",
     "eslint-config-custom": "*",
+    "jest": "^29.3.1",
+    "ts-jest": "^29.0.5",
     "tsconfig": "*",
-    "typescript": "^4.5.2",
-    "tsup": "^6.5.0"
+    "tsup": "^6.5.0",
+    "typescript": "^4.5.2"
   },
   "dependencies": {
     "superstruct": "^1.0.3"
