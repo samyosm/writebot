@@ -7,9 +7,11 @@
   "scripts": {
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
     "lint:fix": "TIMING=1 eslint \"**/*.ts*\" --fix",
-    "build": "tsup *.ts --format cjs --dts\n"
+    "build": "tsup *.ts --format cjs --dts\n",
+    "test": "jest"
   },
   "devDependencies": {
+    "jest": "*",
     "eslint": "^7.32.0",
     "eslint-config-custom": "*",
     "tsconfig": "*",
