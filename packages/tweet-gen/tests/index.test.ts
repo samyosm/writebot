@@ -42,6 +42,6 @@ describe('tweet-gen', () => {
   `);
     });
 
-    /* No need for undefined param test because all params are required here */
+    /* No need for undefined param test because all params are required here giut a*/
   });
 });
