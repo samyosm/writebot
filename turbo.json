@@ -3,6 +3,9 @@
   "globalEnv": [
     "OPENAI_API_KEY"
   ],
+  "globalDependencies": [
+    "jest.config.js"
+  ],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
