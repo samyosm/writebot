@@ -11,6 +11,7 @@
     "publish-package": {
       "inputs": []
     },
+    "test": {},
     "lint": {
       "dependsOn": [
         "^lint"
