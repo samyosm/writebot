@@ -60,7 +60,7 @@ const config = {
         title: 'Writebot',
         logo: {
           alt: 'Writebot',
-          src: 'img/logo.png'
+          src: 'img/logo.ico'
         },
         items: [
           {
