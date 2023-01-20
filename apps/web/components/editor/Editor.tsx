@@ -1,11 +1,11 @@
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import { InitialConfigType, LexicalComposer } from '@lexical/react/LexicalComposer';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
-import { $getRoot, $getSelection, EditorState, EditorThemeClasses } from 'lexical';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { useEffect } from 'react';
+import {
+  EditorState
+} from 'lexical';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
 import { ListItemNode, ListNode } from '@lexical/list';
@@ -14,23 +14,14 @@ import { AutoLinkNode, LinkNode } from '@lexical/link';
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
 import { TRANSFORMERS } from '@lexical/markdown';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import { EditorPlaceholder } from '@/components/editor/EditorPlaceholder';
 
-function MyCustomAutoFocusPlugin() {
-  const [editor] = useLexicalComposerContext();
-
-  useEffect(() => {
-    // Focus the editor when the effect fires!
-    editor.focus();
-  }, [editor]);
-
-  return null;
-}
-
-function onError(error: unknown) {
+const onError = (error: unknown) => {
   console.error(error);
-}
+};
 
-function onChange(editorState: EditorState) {
+const onChange = (editorState: EditorState) => {
   editorState.read(() => {
     // Read the contents of the EditorState here.
 /*    const root = $getRoot();
@@ -39,16 +30,12 @@ function onChange(editorState: EditorState) {
     console.log(selection?.getTextContent());*/
 
   });
-}
-
-const theme: EditorThemeClasses = {
-  placeholder: 'text-white'
 };
 
 export const Editor = () => {
+
   const initialConfig = {
     namespace: 'MyEditor',
-    theme,
     onError,
     nodes: [
       HeadingNode,
@@ -63,19 +50,19 @@ export const Editor = () => {
       AutoLinkNode,
       LinkNode
     ]
-  };
+  } satisfies InitialConfigType;
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <div className="w-full relative prose prose-sm prose-slate">
+      <div className="editor-container">
         <RichTextPlugin
-          contentEditable={<ContentEditable className="relative w-full h-full bg-gray-200 p-5 prose prose-sm prose-slate"/>}
-          placeholder={<div className="absolute inset-5 select-none pointer-events-none prose prose-sm prose-slate">Enter some text...</div>}
+          contentEditable={<ContentEditable className="editor-content"/>}
+          placeholder={<EditorPlaceholder />}
           ErrorBoundary={LexicalErrorBoundary}
         />
         <OnChangePlugin onChange={onChange} />
         <HistoryPlugin />
-        <MyCustomAutoFocusPlugin/>
+        <AutoFocusPlugin/>
         <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
       </div>
     </LexicalComposer>

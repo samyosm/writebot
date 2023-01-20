@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .prose-config {
+    @apply prose prose-sm prose-slate;
+  }
+
+  .editor-container {
+    @apply w-full relative prose-config;
+  }
+  .editor-content {
+    @apply relative w-full h-full bg-gray-200 p-5 prose-config;
+  }
+  .editor-placeholder {
+    @apply absolute inset-5 select-none pointer-events-none prose-config;
+  }
+}
+
+@layer base {
+  .editor-content p:first-child {
+    @apply !m-0;
+  }
+}
+
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -17,14 +40,5 @@ body {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
-  }
-}
-
-@layer base {
-  h1 {
-    @apply text-2xl;
-  }
-  h2 {
-    @apply text-xl;
   }
 }
