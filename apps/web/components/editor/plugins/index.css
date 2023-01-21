@@ -1,0 +1,20 @@
+.draggable-block-menu {
+  @apply rounded-sm py-1 px-0.5 opacity-0 absolute top-0 left-0 will-change-transform cursor-grab;
+}
+
+.draggable-block-menu .icon {
+  @apply w-4 h-4;
+  opacity: 0.3;
+  background-image: url(./draggable-block-menu.svg);
+}
+.draggable-block-menu:active {
+  @apply cursor-grabbing;
+}
+
+.draggable-block-menu:hover {
+  @apply bg-slate-200;
+}
+
+.draggable-block-target-line {
+  @apply pointer-events-none bg-amber-400 h-0.5 absolute top-0 left-0 opacity-0 will-change-transform;
+}
