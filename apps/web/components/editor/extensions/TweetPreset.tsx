@@ -20,13 +20,14 @@ const GetTweet = async ({ description, tone }: TweetPresetValue) => {
   return json.text;
 };
 
+
 const Component = ({ value, nodeKey }: { value: TweetPresetValue, nodeKey: NodeKey }) => {
   const [editor] = useLexicalComposerContext();
 
   const setValue = (v: { tone?: string, description?: string }) => {
     $setPresetValue(editor, nodeKey, {
-      tone: v.tone || value.tone,
-      description: v.description || value.description
+      tone: 'tone' in v ? v.tone : value.tone,
+      description: 'description' in v ? v.description : value.description
     });
   };
 
@@ -54,6 +55,10 @@ export class TweetPreset extends PresetNode<TweetPresetValue> {
 
   static getType(): string {
     return 'tweet-preset';
+  }
+
+  static clone(node: TweetPreset): TweetPreset {
+    return $createTweetPreset(node.__value);
   }
 
   exportJSON(): SerializedPresetNode<TweetPresetValue> {
