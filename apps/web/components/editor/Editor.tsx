@@ -19,7 +19,7 @@ import { EditorPlaceholder } from '@/components/editor/EditorPlaceholder';
 import React, { useState } from 'react';
 import { InsertBlockCommand } from '@/components/editor/commands/InsertBlockCommand';
 import { InsertPopupPlugin } from '@/components/editor/plugins/InsertPopupPlugin';
-import { SamyBlock } from '@/components/editor/extensions/SamyBlock';
+import { TweetPreset } from '@/components/editor/extensions/TweetPreset';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import DraggableBlockPlugin from '@/components/editor/plugins/DraggableBlockPluggin';
@@ -58,7 +58,7 @@ export const Editor = () => {
       TableRowNode,
       AutoLinkNode,
       LinkNode,
-      SamyBlock,
+      TweetPreset,
       HorizontalRuleNode
     ]
   } satisfies InitialConfigType;

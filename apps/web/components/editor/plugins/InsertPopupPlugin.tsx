@@ -1,5 +1,5 @@
 import { LexicalEditor, LexicalNode } from 'lexical';
-import { $createSamyBlock } from '@/components/editor/extensions/SamyBlock';
+import { $createEmptyTweetPreset, $createTweetPreset } from '@/components/editor/extensions/TweetPreset';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import React from 'react';
 import { createKeybindingsHandler } from 'tinykeys';
@@ -38,12 +38,11 @@ const InsertPopup = ({ editor, close }: { editor: LexicalEditor, close: () => vo
     <div className="absolute-center bg-white rounded-md p-5 max-w-sm w-full not-prose h-full max-h-96 overflow-y-scroll">
       <p className="font-bold text-lg text-center p-5">Insert a popup</p>
       <div className="flex flex-col gap-5">
-        <BlockPresentation node={$createSamyBlock} onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
-        <BlockPresentation node={$createTableNode}  onClick={handleClick} name="Header 1" description="This block is a test block for what I'm doing"/>
-        <BlockPresentation node={$createSamyBlock}  onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
-        <BlockPresentation node={$createSamyBlock}  onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
-        <BlockPresentation node={$createSamyBlock}  onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
-        <BlockPresentation node={$createSamyBlock}  onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
+        <BlockPresentation node={$createEmptyTweetPreset} onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
+        <BlockPresentation node={$createEmptyTweetPreset} onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
+        <BlockPresentation node={$createEmptyTweetPreset} onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
+        <BlockPresentation node={$createEmptyTweetPreset} onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
+        <BlockPresentation node={$createEmptyTweetPreset} onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
       </div>
     </div>
   );
