@@ -37,6 +37,9 @@
     "prosemirror-transform": "^1.7.0",
     "prosemirror-view": "^1.29.2",
     "react-dom": "^18.2.0",
-    "tinykeys": "^1.4.0"
+    "superstruct": "^1.0.3",
+    "tinykeys": "^1.4.0",
+    "tweet-gen": "^0.4.1",
+    "writebot": "^0.6.1"
   }
 }

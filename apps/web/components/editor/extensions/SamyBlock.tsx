@@ -12,50 +12,80 @@ import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
 import React, { Suspense, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $insertNodeToNearestRoot, $wrapNodeInElement } from '@lexical/utils';
+import { Writebot } from 'writebot';
+import TweetGen from 'tweet-gen';
+import { Infer } from 'superstruct';
 
-const Component = ({ title, preview, value, nodeKey }: { title: string, preview: string, value: string, nodeKey: NodeKey }) => {
+const GetTweet = async (description: string, tone: string) => {
+  const response = await fetch('/api/tweet', {
+    method: 'POST',
+    body: JSON.stringify({
+      description,
+      tone
+    })
+  });
+  const json = await response.json();
+  return json.text;
+};
+
+const Component = ({ value, nodeKey }: { value: { tone: string, description: string }, nodeKey: NodeKey }) => {
   const [editor] = useLexicalComposerContext();
-  const setValue = (t: string) => {
+  const setValue = (t: { tone?: string, description?: string }) => {
     editor.update(() => {
       const block = $getNodeByKey(nodeKey) satisfies SamyBlock | null;
-      console.log(block?.__value);
-      block?.setValue(t);
+      console.log(t);
+      block?.setValue({
+        tone: t.tone || value.tone,
+        description: t.description || value.description
+      });
     });
   };
 
-  const handleKeypress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if(e.key === 'Enter') {
-      e.preventDefault();
-      e.stopPropagation();
+  const handleSubmit = (e:  React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    editor.getEditorState().read(() => {
+      const block = $getNodeByKey(nodeKey) satisfies SamyBlock | null;
 
-      editor.update(() => {
-        const block = $getNodeByKey(nodeKey) satisfies SamyBlock | null;
-        console.log(block);
-        const node = $createTextNode(block?.__value);
-        const parents = block?.getParentOrThrow().clear();
-        parents?.selectStart().insertNodes([node]);
-      });
-    }
+      if(block) {
+        GetTweet(block.__value.description, block.__value.tone)
+          .then((response: string) => {
+            editor.update(() => {
+              const node = $createTextNode(response.trim());
+              const parents = block?.getParentOrThrow().clear();
+              parents?.selectStart().insertNodes([node]);
+            });
+          });
+      }
+
+    });
+
+
+
+
+
   };
 
   return (
     <div className="mb-5 p-5 bg-slate-300 rounded-md not-prose">
-      <h2 className="text-xl font-bold my-2">{title}</h2>
-      <p className="my-1">{preview}</p>
-      <input onKeyDown={handleKeypress} autoFocus value={value} onChange={(e) => setValue(e.target.value)} className="bg-white w-full p-2" type="text"/>
+      <h2 className="text-xl font-bold my-2">Add a tweet</h2>
+      <input value={value.description} autoFocus onChange={(e) => setValue({ description: e.target.value })} className="bg-white w-full p-2" type="text"/>
+      <input value={value.tone} onChange={(e) => setValue({ tone: e.target.value })} className="bg-white w-full p-2" type="text"/>
+      <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 };
 
 export class SamyBlock extends DecoratorNode<React.ReactNode> {
-  __value: string;
+  __value: { tone: string, description: string };
 
-  constructor(_value: string, key?: string,) {
+  constructor(__value: { tone?: string, description?: string }, key?: string,) {
     super(key);
-    this.__value = _value;
+    this.__value = {
+      tone: __value.tone || '',
+      description: __value.description || ''
+    };
   }
 
-  setValue = (t: string) => {
+  setValue = (t: { tone: string, description: string }) => {
     const self = this.getWritable();
     self.__value = t;
   };
@@ -84,14 +114,14 @@ export class SamyBlock extends DecoratorNode<React.ReactNode> {
   decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
     return (
       <Suspense fallback={null}>
-        <Component nodeKey={this.__key} value={this.__value} title="This is my title" preview="The text you are currently reading right now will be the preview I use for this component."/>
+        <Component nodeKey={this.__key} value={this.__value}/>
       </Suspense>
     );
   }
 }
 
 export const $createSamyBlock = (): SamyBlock => {
-  return new SamyBlock('test');
+  return new SamyBlock({});
 };
 
 export const $isSamyBlock = (node ?: LexicalNode) => {
