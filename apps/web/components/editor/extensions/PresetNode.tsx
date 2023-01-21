@@ -46,10 +46,13 @@ export class PresetNode<T> extends DecoratorNode<React.ReactNode> {
 
   exportDOM(): DOMExportOutput {
     const element = document.createElement('span');
+    element.classList.add('w-full');
     return { element };
   }
   createDOM(): HTMLElement {
     const elem = document.createElement('span');
+    elem.classList.add('w-full');
+
     elem.style.display = 'inline-block';
     return elem;
   }

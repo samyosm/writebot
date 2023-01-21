@@ -4,6 +4,8 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import {
+  $createParagraphNode,
+  $getRoot, $insertNodes, $isRootOrShadowRoot, COMMAND_PRIORITY_EDITOR,
   EditorState
 } from 'lexical';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
@@ -16,13 +18,16 @@ import { TRANSFORMERS } from '@lexical/markdown';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { EditorPlaceholder } from '@/components/editor/EditorPlaceholder';
-import React, { useState } from 'react';
-import { InsertBlockCommand } from '@/components/editor/commands/InsertBlockCommand';
+import React, { useEffect, useState } from 'react';
+import { INSERT_BLOCK_COMMAND, InsertBlockCommand } from '@/components/editor/commands/InsertBlockCommand';
 import { InsertPopupPlugin } from '@/components/editor/plugins/InsertPopupPlugin';
 import { TweetPreset } from '@/components/editor/extensions/TweetPreset';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import DraggableBlockPlugin from '@/components/editor/plugins/DraggableBlockPluggin';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { $wrapNodeInElement, mergeRegister } from '@lexical/utils';
+import { NodeMaker } from '@/types/lexical';
 
 const onError = (error: unknown) => {
   console.error(error);
@@ -30,13 +35,26 @@ const onError = (error: unknown) => {
 
 const onChange = (editorState: EditorState) => {
   editorState.read(() => {
-    // Read the contents of the EditorState here.
-    /*    const root = $getRoot();
-        console.log(root.getTextContent().replace(/\n/g, ' '));
-        const selection = $getSelection();
-        console.log(selection?.getTextContent());*/
+
+    localStorage.setItem('editorState', JSON.stringify(editorState));
 
   });
+};
+
+
+export const LocalStorageSavePlugin = () => {
+  const [editor] = useLexicalComposerContext();
+
+  React.useEffect(() => {
+    const localEditorState = localStorage.getItem('editorState');
+    if (localEditorState) {
+      const parsedEditorState = editor.parseEditorState(JSON.parse(localEditorState));
+
+      console.log(parsedEditorState);
+      editor.setEditorState(parsedEditorState);
+    }
+  }, [editor]);
+  return null;
 };
 
 
@@ -91,6 +109,7 @@ export const Editor = () => {
         <MarkdownShortcutPlugin transformers={TRANSFORMERS}/>
         <InsertPopupPlugin/>
         <InsertBlockCommand/>
+        <LocalStorageSavePlugin/>
         {
           floatingAnchorElem && <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
         }

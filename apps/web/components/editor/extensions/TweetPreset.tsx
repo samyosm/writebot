@@ -39,11 +39,29 @@ const Component = ({ value, nodeKey }: { value: TweetPresetValue, nodeKey: NodeK
   };
 
   return (
-    <div className="mb-5 p-5 bg-slate-300 rounded-md not-prose">
-      <h2 className="text-xl font-bold my-2">Add a tweet</h2>
-      <input value={value.description} autoFocus onChange={(e) => setValue({ description: e.target.value })} className="bg-white w-full p-2" type="text"/>
-      <input value={value.tone} onChange={(e) => setValue({ tone: e.target.value })} className="bg-white w-full p-2" type="text"/>
-      <button onClick={handleSubmit}>Submit</button>
+    <div className="mb-5 p-5 bg-slate-200 outline outline-slate-300 rounded-md not-prose w-full flex flex-col gap-3">
+      <h2 className="text-lg font-bold my-2">Add a tweet</h2>
+      <div className="flex w-full gap-2">
+        <TextInput example="A tweet about AIs" label="Tweet description" value={value.description} setValue={(e) => setValue({ description: e })}/>
+        <TextInput example="Afraid" label="Tweet tone" value={value.tone} setValue={(e) => setValue({ tone: e })}/>
+      </div>
+      <div className="w-full flex justify-end">
+        <button className="bg-blue-500 rounded-md p-2 px-4 hover:bg-blue-600 text-white" onClick={handleSubmit}>Insert</button>
+      </div>
+    </div>
+  );
+};
+
+const TextInput = ({ value, setValue, label, example }: { example: string, label: string, value: string, setValue: (t: string) => void }) => {
+  return (
+    <div className="flex flex-col gap-1 w-full">
+      <p className="">{label}</p>
+      <input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        className="bg-white w-full p-2 outline-none rounded-md"
+        type="text"
+        placeholder={example}/>
     </div>
   );
 };
