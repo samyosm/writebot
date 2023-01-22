@@ -3,11 +3,11 @@ import * as React from 'react';
 import {
   $createParagraphNode,
   $getSelection,
-  $insertNodes,
-  $isRootOrShadowRoot,
+  $insertNodes, $isParagraphNode,
+  $isRootOrShadowRoot, $setSelection,
   COMMAND_PRIORITY_EDITOR,
   createCommand,
-  LexicalCommand
+  LexicalCommand, ParagraphNode
 } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $wrapNodeInElement, mergeRegister, $insertNodeToNearestRoot } from '@lexical/utils';
@@ -24,10 +24,30 @@ export const InsertBlockCommand = () => {
       INSERT_BLOCK_COMMAND,
       (payload) => {
         const node = payload();
-        $insertNodes([node], true);
-        if($isRootOrShadowRoot(node.getParentOrThrow())){
-          $wrapNodeInElement(node, $createParagraphNode).selectEnd();
+        const selection = $getSelection();
+        const selectionNodes = selection?.getNodes();
+        if (selectionNodes && selectionNodes.length === 1 && $isParagraphNode(selectionNodes.at(0))) {
+          const selectedNode = selectionNodes[0] as ParagraphNode;
+
+          $insertNodes([node], true);
+
+          selectedNode.remove();
         }
+        else if (selectionNodes) {
+          selectionNodes.at(selectionNodes.length-1)?.getParentOrThrow().insertAfter(node);
+        } else {
+          $insertNodes([node], true);
+          if($isRootOrShadowRoot(node.getParentOrThrow())){
+            $wrapNodeInElement(node, $createParagraphNode).selectEnd();
+          }
+        }
+
+        if (!node.getNextSibling()) {
+          const toInsert = $createParagraphNode();
+          node.insertAfter(toInsert, true);
+          $setSelection(toInsert.selectStart());
+        }
+
         return true;
       },
       COMMAND_PRIORITY_EDITOR,

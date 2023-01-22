@@ -22,8 +22,8 @@ const BlockPresentation = ({ name, description, onClick, node }: BlockPresentati
     onClick(node);
   };
   return (
-    <div className="w-full hover:bg-slate-200 rounded-md cursor-pointer p-2" onClick={handleClick}>
-      <p>{name}</p>
+    <div className="w-full hover:bg-slate-200 rounded-md cursor-pointer p-4" onClick={handleClick}>
+      <p className="font-bold">{name}</p>
       <p className="line-clamp-1">{description}</p>
     </div>
   );
@@ -35,14 +35,10 @@ const InsertPopup = ({ editor, close }: { editor: LexicalEditor, close: () => vo
     close();
   };
   return (
-    <div className="absolute-center bg-white rounded-md p-5 max-w-sm w-full not-prose h-full max-h-96 overflow-y-scroll">
-      <p className="font-bold text-lg text-center p-5">Insert a popup</p>
+    <div className="absolute-center bg-white rounded-md p-2 max-w-sm w-full not-prose h-full max-h-96 overflow-y-auto shadow-2xl border border-slate-400">
+      <p className="font-bold text-lg text-center p-3">Insert a popup</p>
       <div className="flex flex-col gap-5">
-        <BlockPresentation node={$createEmptyTweetPreset} onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
-        <BlockPresentation node={$createEmptyTweetPreset} onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
-        <BlockPresentation node={$createEmptyTweetPreset} onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
-        <BlockPresentation node={$createEmptyTweetPreset} onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
-        <BlockPresentation node={$createEmptyTweetPreset} onClick={handleClick} name="Samy Test" description="This block is a test block for what I'm doing"/>
+        <BlockPresentation node={$createEmptyTweetPreset} onClick={handleClick} name="Tweet" description="Create a simple tweet"/>
       </div>
     </div>
   );
@@ -55,7 +51,7 @@ export const InsertPopupPlugin = () => {
 
   React.useEffect(() => {
     const handler = createKeybindingsHandler({
-      '$mod+g': () => {
+      '$mod+m': () => {
         setOpen((prev) => !prev);
       }
     });

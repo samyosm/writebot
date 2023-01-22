@@ -49,11 +49,11 @@ export class PresetNode<T> extends DecoratorNode<React.ReactNode> {
     element.classList.add('w-full');
     return { element };
   }
+
   createDOM(): HTMLElement {
     const elem = document.createElement('span');
-    elem.classList.add('w-full');
+    elem.className = elem.className.concat(' w-full');
 
-    elem.style.display = 'inline-block';
     return elem;
   }
 
@@ -69,33 +69,28 @@ export class PresetNode<T> extends DecoratorNode<React.ReactNode> {
     );
   }
 }
-export const $createPresetNode = <T,>(value : T): PresetNode<T> => {
+
+export const $createPresetNode = <T, >(value: T): PresetNode<T> => {
   return new PresetNode<T>(value);
 };
 
 
-export const $setPresetValue = <T,>(editor: LexicalEditor, nodeKey: NodeKey, value: T) => {
+export const $setPresetValue = <T, >(editor: LexicalEditor, nodeKey: NodeKey, value: T) => {
   editor.update(() => {
     const block = $getNodeByKey(nodeKey) satisfies PresetNode<T> | null;
     block?.setValue(value);
   });
 };
 
-export const $setPresetContent = <T,>(editor: LexicalEditor, nodeKey: NodeKey, getContent: (v: T) => Promise<string>) => {
-  editor.getEditorState().read(() => {
+export const $setPresetContent = <T, >(editor: LexicalEditor, nodeKey: NodeKey, content: string) => {
+
+  editor.update(() => {
     const block = $getNodeByKey(nodeKey) satisfies PresetNode<T> | null;
 
-    if(block) {
-      const value = block.__value;
-      getContent(value)
-        .then((response) => {
-          editor.update(() => {
-            const node = $createTextNode(response.trim());
-            const parents = block?.getParentOrThrow().clear();
-            parents?.selectStart().insertNodes([node]);
-          });
-        });
+    if (block) {
+      const node = $createTextNode(content);
+      const parents = block?.getParentOrThrow().clear();
+      parents?.selectStart().insertNodes([node]);
     }
-
   });
 };

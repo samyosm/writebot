@@ -1,5 +1,5 @@
-import { LexicalNode, NodeKey } from 'lexical';
-import React, { Suspense } from 'react';
+import { $getNodeByKey, LexicalNode, NodeKey } from 'lexical';
+import React, { Suspense, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $setPresetContent,
@@ -21,7 +21,7 @@ const GetTweet = async ({ description, tone }: TweetPresetValue) => {
 };
 
 
-const Component = ({ value, nodeKey }: { value: TweetPresetValue, nodeKey: NodeKey }) => {
+const Component = ({ value, nodeKey, generated }: { value: TweetPresetValue, nodeKey: NodeKey, generated?: string }) => {
   const [editor] = useLexicalComposerContext();
 
   const setValue = (v: { tone?: string, description?: string }) => {
@@ -31,22 +31,52 @@ const Component = ({ value, nodeKey }: { value: TweetPresetValue, nodeKey: NodeK
     });
   };
 
-  const handleSubmit = (e:  React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleGenerate = (e:  React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
 
-    $setPresetContent(editor, nodeKey, GetTweet);
+    editor.getEditorState().read(() => {
+      const preset = $getNodeByKey(nodeKey) satisfies TweetPreset | null;
+      if (preset) {
+        const value = preset.__value;
+        GetTweet(value)
+          .then((tweet) => {
+            editor.update(() => {
+              preset.setGenerated(tweet.trim());
+            });
+          });
+      }
+    });
+  };
+
+  const handleInsert = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    $setPresetContent(editor, nodeKey, generated!);
   };
 
   return (
-    <div className="mb-5 p-5 bg-slate-200 outline outline-slate-300 rounded-md not-prose w-full flex flex-col gap-3">
+    <div className="mb-5 p-5 bg-slate-200 border border-slate-300 rounded-md not-prose w-full flex flex-col gap-3">
       <h2 className="text-lg font-bold my-2">Add a tweet</h2>
       <div className="flex w-full gap-2">
         <TextInput example="A tweet about AIs" label="Tweet description" value={value.description} setValue={(e) => setValue({ description: e })}/>
         <TextInput example="Afraid" label="Tweet tone" value={value.tone} setValue={(e) => setValue({ tone: e })}/>
       </div>
-      <div className="w-full flex justify-end">
-        <button className="bg-blue-500 rounded-md p-2 px-4 hover:bg-blue-600 text-white" onClick={handleSubmit}>Insert</button>
+      {
+        generated &&
+        (
+          <div className="flex flex-col gap-1">
+            <p>Result</p>
+            <div className="prose bg-white p-5 rounded-md">
+              {generated}
+            </div>
+          </div>
+        )
+      }
+      <div className="w-full flex justify-end gap-2">
+        { generated && <button className="bg-emerald-500 rounded-md p-2 px-4 hover:bg-blue-600 text-white" onClick={handleInsert}>{'Insert'}</button>}
+        <button className="bg-blue-500 rounded-md p-2 px-4 hover:bg-blue-600 text-white" onClick={handleGenerate}>{generated ? 'Regenerate' : 'Generate'}</button>
       </div>
     </div>
   );
@@ -70,13 +100,29 @@ type TweetPresetValue = { tone: string, description: string };
 
 
 export class TweetPreset extends PresetNode<TweetPresetValue> {
+  __generated: string | undefined;
+
+  isInline(): boolean {
+    return false;
+  }
+
+
+  constructor(_value: TweetPresetValue, generated?: string, key?: string) {
+    super(_value, key);
+    this.__generated = generated;
+  }
+
+  setGenerated(generated: string) {
+    const self = this.getWritable();
+    self.__generated = generated;
+  }
 
   static getType(): string {
     return 'tweet-preset';
   }
 
   static clone(node: TweetPreset): TweetPreset {
-    return $createTweetPreset(node.__value);
+    return $createTweetPreset(node.__value, node.__generated);
   }
 
   exportJSON(): SerializedPresetNode<TweetPresetValue> {
@@ -90,14 +136,14 @@ export class TweetPreset extends PresetNode<TweetPresetValue> {
   decorate(): JSX.Element {
     return (
       <Suspense fallback={null}>
-        <Component nodeKey={this.__key} value={this.__value}/>
+        <Component generated={this.__generated} nodeKey={this.__key} value={this.__value}/>
       </Suspense>
     );
   }
 }
 
-export const $createTweetPreset = ({ tone, description } : TweetPresetValue): TweetPreset => {
-  return new TweetPreset({ tone, description });
+export const $createTweetPreset = ({ tone, description } : TweetPresetValue, generated?: string): TweetPreset => {
+  return new TweetPreset({ tone, description }, generated);
 };
 
 export const $createEmptyTweetPreset = (): TweetPreset => {
