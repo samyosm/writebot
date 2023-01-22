@@ -57,7 +57,7 @@ const Component = ({ value, nodeKey, generated }: { value: TweetPresetValue, nod
   };
 
   return (
-    <div className="mb-5 p-5 bg-slate-200 border border-slate-300 rounded-md not-prose w-full flex flex-col gap-3">
+    <div className="mb-5 p-5 bg-slate-200 border border-slate-300 rounded-md not-prose w-full flex flex-col gap-3 focus:outline focus:outline-slate-500">
       <h2 className="text-lg font-bold my-2">Add a tweet</h2>
       <div className="flex w-full gap-2">
         <TextInput example="A tweet about AIs" label="Tweet description" value={value.description} setValue={(e) => setValue({ description: e })}/>
@@ -101,10 +101,6 @@ type TweetPresetValue = { tone: string, description: string };
 
 export class TweetPreset extends PresetNode<TweetPresetValue> {
   __generated: string | undefined;
-
-  isInline(): boolean {
-    return false;
-  }
 
 
   constructor(_value: TweetPresetValue, generated?: string, key?: string) {

@@ -3,7 +3,7 @@ import {
   $getNodeByKey,
   DecoratorNode,
   DOMExportOutput,
-  LexicalEditor,
+  LexicalEditor, LexicalNode,
   NodeKey,
   SerializedLexicalNode,
   Spread
@@ -21,6 +21,16 @@ export type SerializedPresetNode<T> = Spread<
 
 export class PresetNode<T> extends DecoratorNode<React.ReactNode> {
   __value: T;
+
+
+  isInline(): boolean {
+    return false;
+  }
+
+
+  isIsolated(): boolean {
+    return false;
+  }
 
   constructor(__value: T, key?: string,) {
     super(key);
@@ -45,16 +55,18 @@ export class PresetNode<T> extends DecoratorNode<React.ReactNode> {
   }
 
   exportDOM(): DOMExportOutput {
-    const element = document.createElement('span');
+    const element = document.createElement('div');
     element.classList.add('w-full');
     return { element };
   }
 
   createDOM(): HTMLElement {
-    const elem = document.createElement('span');
-    elem.className = elem.className.concat(' w-full');
-
+    const elem = document.createElement('div');
     return elem;
+  }
+
+  isKeyboardSelectable(): boolean {
+    return true;
   }
 
   updateDOM(): false {
@@ -82,6 +94,9 @@ export const $setPresetValue = <T, >(editor: LexicalEditor, nodeKey: NodeKey, va
   });
 };
 
+export const $isPresetNode = (node: LexicalNode) => {
+  return node instanceof PresetNode;
+};
 export const $setPresetContent = <T, >(editor: LexicalEditor, nodeKey: NodeKey, content: string) => {
 
   editor.update(() => {

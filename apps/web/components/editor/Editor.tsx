@@ -4,17 +4,17 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import {
-  $createParagraphNode,
-  $getRoot,
+  $createParagraphNode, $getAdjacentNode,
+  $getRoot, $getSelection,
   $insertNodes,
-  $isDecoratorNode,
-  $isParagraphNode,
+  $isDecoratorNode, $isElementNode, $isNodeSelection,
+  $isParagraphNode, $isRangeSelection,
   $isRootOrShadowRoot,
   $setSelection,
-  COMMAND_PRIORITY_EDITOR,
-  EditorState,
-  LexicalNode,
-  RootNode,
+  COMMAND_PRIORITY_EDITOR, COMMAND_PRIORITY_HIGH, DELETE_CHARACTER_COMMAND,
+  EditorState, ElementNode, KEY_ARROW_UP_COMMAND,
+  LexicalNode, ParagraphNode,
+  RootNode, SELECTION_CHANGE_COMMAND,
   TextNode
 } from 'lexical';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
@@ -37,6 +37,7 @@ import DraggableBlockPlugin from '@/components/editor/plugins/DraggableBlockPlug
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $wrapNodeInElement, mergeRegister } from '@lexical/utils';
 import { NodeMaker } from '@/types/lexical';
+import { $isPresetNode } from '@/components/editor/extensions/PresetNode';
 
 const onError = (error: unknown) => {
   console.error(error);
@@ -67,6 +68,39 @@ export const LocalStorageSavePlugin = () => {
 };
 
 
+
+export const DeletePresetFromParagraphNodePlugin = () => {
+  const [editor] = useLexicalComposerContext();
+
+  React.useEffect(() => {
+    mergeRegister(
+      editor.registerCommand<boolean>(
+        DELETE_CHARACTER_COMMAND,
+        (isBackward) => {
+          const selection = $getSelection();
+          if (!$isRangeSelection(selection)) {
+            return false;
+          }
+
+          const selectionNodes = selection.getNodes();
+          if (selectionNodes.length === 1 && $isParagraphNode(selectionNodes[0])) {
+            const selectionNode = selectionNodes[0];
+            const sibling = isBackward ? selectionNode.getPreviousSibling() : selectionNode.getNextSibling();
+            if (sibling && $isPresetNode(sibling)) {
+              sibling.remove();
+            }
+          }
+
+          selection.deleteCharacter(isBackward);
+          return true;
+        },
+        COMMAND_PRIORITY_HIGH,
+      )
+    );
+  }, [editor]);
+  return null;
+};
+
 export const ParagraphAtRootEndPlugin = () => {
   const [editor] = useLexicalComposerContext();
 
@@ -91,6 +125,7 @@ export const Editor = () => {
   const initialConfig = {
     namespace: 'MyEditor',
     onError,
+
     nodes: [
       HeadingNode,
       ListNode,
@@ -138,6 +173,7 @@ export const Editor = () => {
         <InsertBlockCommand/>
         <LocalStorageSavePlugin/>
         <ParagraphAtRootEndPlugin/>
+        <DeletePresetFromParagraphNodePlugin/>
         {
           floatingAnchorElem && <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
         }
