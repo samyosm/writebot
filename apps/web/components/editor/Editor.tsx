@@ -5,8 +5,17 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import {
   $createParagraphNode,
-  $getRoot, $insertNodes, $isRootOrShadowRoot, COMMAND_PRIORITY_EDITOR,
-  EditorState
+  $getRoot,
+  $insertNodes,
+  $isDecoratorNode,
+  $isParagraphNode,
+  $isRootOrShadowRoot,
+  $setSelection,
+  COMMAND_PRIORITY_EDITOR,
+  EditorState,
+  LexicalNode,
+  RootNode,
+  TextNode
 } from 'lexical';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
@@ -56,6 +65,24 @@ export const LocalStorageSavePlugin = () => {
   }, [editor]);
   return null;
 };
+
+
+export const ParagraphAtRootEndPlugin = () => {
+  const [editor] = useLexicalComposerContext();
+
+  React.useEffect(() => {
+    editor.registerNodeTransform(RootNode, (node) => {
+      const lastChild = node.getLastChild();
+      if (!$isParagraphNode(lastChild) && $isDecoratorNode(lastChild)) {
+        const insertNode = $createParagraphNode();
+        lastChild?.insertAfter(insertNode);
+        $setSelection(insertNode.selectStart());
+      }
+    });
+  }, [editor]);
+  return null;
+};
+
 
 
 
@@ -110,6 +137,7 @@ export const Editor = () => {
         <InsertPopupPlugin/>
         <InsertBlockCommand/>
         <LocalStorageSavePlugin/>
+        <ParagraphAtRootEndPlugin/>
         {
           floatingAnchorElem && <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
         }
