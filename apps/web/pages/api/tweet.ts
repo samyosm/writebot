@@ -13,6 +13,8 @@ Writebot.initialize({
   apiKey: process.env.OPEN_AI_TOKEN as string
 });
 
+let cache: any = null;
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -23,10 +25,9 @@ export default async function handler(
     tone: body.tone || 'Surprised but afraid'
   };
 
-  console.log(params);
+  if (!cache) cache = await Writebot.write(TweetGen, params);
 
-  const tweet: any = await Writebot.write(TweetGen, params);
   res.status(200).json({
-    text: tweet.data.choices[0].text as string
+    text: cache.data.choices[0].text as string
   });
 }

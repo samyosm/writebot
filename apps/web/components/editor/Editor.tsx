@@ -173,7 +173,6 @@ export const Editor = () => {
         <InsertBlockCommand/>
         <LocalStorageSavePlugin/>
         <ParagraphAtRootEndPlugin/>
-        <DeletePresetFromParagraphNodePlugin/>
         {
           floatingAnchorElem && <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
         }

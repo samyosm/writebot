@@ -1,5 +1,12 @@
-import { $getNodeByKey, LexicalNode, NodeKey } from 'lexical';
-import React, { Suspense, useState } from 'react';
+import {
+  $createParagraphNode,
+  $createTextNode,
+  $getNodeByKey, $getSelection, $insertNodes, $isRootOrShadowRoot,
+  CONTROLLED_TEXT_INSERTION_COMMAND,
+  LexicalNode,
+  NodeKey
+} from 'lexical';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $setPresetContent,
@@ -7,6 +14,7 @@ import {
   PresetNode,
   SerializedPresetNode
 } from '@/components/editor/extensions/PresetNode';
+import { $wrapNodeInElement } from '@lexical/utils';
 
 const GetTweet = async ({ description, tone }: TweetPresetValue) => {
   const response = await fetch('/api/tweet', {
@@ -22,6 +30,12 @@ const GetTweet = async ({ description, tone }: TweetPresetValue) => {
 
 
 const Component = ({ value, nodeKey, generated }: { value: TweetPresetValue, nodeKey: NodeKey, generated?: string }) => {
+  const [ tweet, setTweet ] = useState<string | undefined>();
+
+  useEffect(() => {
+    setTweet(generated);
+  }, [generated]);
+
   const [editor] = useLexicalComposerContext();
 
   const setValue = (v: { tone?: string, description?: string }) => {
@@ -53,7 +67,17 @@ const Component = ({ value, nodeKey, generated }: { value: TweetPresetValue, nod
     e.preventDefault();
     e.stopPropagation();
 
-    $setPresetContent(editor, nodeKey, generated!);
+    editor.update(() => {
+      const preset = $getNodeByKey(nodeKey) satisfies TweetPreset | null;
+
+      if (preset) {
+        const paragraphToInsert = $createParagraphNode();
+        const textNode = $createTextNode(tweet!);
+        paragraphToInsert.append(textNode);
+        preset.remove();
+      }
+    });
+
   };
 
   return (
@@ -64,19 +88,19 @@ const Component = ({ value, nodeKey, generated }: { value: TweetPresetValue, nod
         <TextInput example="Afraid" label="Tweet tone" value={value.tone} setValue={(e) => setValue({ tone: e })}/>
       </div>
       {
-        generated &&
+        tweet &&
         (
           <div className="flex flex-col gap-1">
             <p>Result</p>
             <div className="prose bg-white p-5 rounded-md">
-              {generated}
+              {tweet}
             </div>
           </div>
         )
       }
       <div className="w-full flex justify-end gap-2">
-        { generated && <button className="bg-emerald-500 rounded-md p-2 px-4 hover:bg-blue-600 text-white" onClick={handleInsert}>{'Insert'}</button>}
-        <button className="bg-blue-500 rounded-md p-2 px-4 hover:bg-blue-600 text-white" onClick={handleGenerate}>{generated ? 'Regenerate' : 'Generate'}</button>
+        { tweet && <button className="bg-emerald-500 rounded-md p-2 px-4 hover:bg-blue-600 text-white" onClick={handleInsert}>{'Insert'}</button>}
+        <button className="bg-blue-500 rounded-md p-2 px-4 hover:bg-blue-600 text-white" onClick={handleGenerate}>{tweet ? 'Regenerate' : 'Generate'}</button>
       </div>
     </div>
   );
@@ -121,12 +145,17 @@ export class TweetPreset extends PresetNode<TweetPresetValue> {
     return $createTweetPreset(node.__value, node.__generated);
   }
 
-  exportJSON(): SerializedPresetNode<TweetPresetValue> {
-    return super.exportJSON();
+  exportJSON(): any {
+    return {
+      value: this.__value,
+      type: this.getType(),
+      generated: this.__generated,
+      version: 1
+    };
   }
 
-  static importJSON(serializedNode: SerializedPresetNode<TweetPresetValue>): TweetPreset {
-    return $createTweetPreset(serializedNode.value);
+  static importJSON(serializedNode: any): TweetPreset {
+    return $createTweetPreset(serializedNode.value, serializedNode.generated);
   }
 
   decorate(): JSX.Element {
