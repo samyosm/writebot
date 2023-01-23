@@ -39,6 +39,7 @@ import { $wrapNodeInElement, mergeRegister } from '@lexical/utils';
 import { NodeMaker } from '@/types/lexical';
 import { $isPresetNode } from '@/components/editor/extensions/PresetNode';
 
+
 const onError = (error: unknown) => {
   console.error(error);
 };
@@ -66,9 +67,6 @@ export const LocalStorageSavePlugin = () => {
   }, [editor]);
   return null;
 };
-
-
-
 export const DeletePresetFromParagraphNodePlugin = () => {
   const [editor] = useLexicalComposerContext();
 
@@ -100,7 +98,6 @@ export const DeletePresetFromParagraphNodePlugin = () => {
   }, [editor]);
   return null;
 };
-
 export const ParagraphAtRootEndPlugin = () => {
   const [editor] = useLexicalComposerContext();
 

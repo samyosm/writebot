@@ -30,13 +30,14 @@ const GetTweet = async ({ description, tone }: TweetPresetValue) => {
 
 
 const Component = ({ value, nodeKey, generated }: { value: TweetPresetValue, nodeKey: NodeKey, generated?: string }) => {
+  const [editor] = useLexicalComposerContext();
+  
   const [ tweet, setTweet ] = useState<string | undefined>();
 
   useEffect(() => {
     setTweet(generated);
   }, [generated]);
 
-  const [editor] = useLexicalComposerContext();
 
   const setValue = (v: { tone?: string, description?: string }) => {
     $setPresetValue(editor, nodeKey, {

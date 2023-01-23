@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  @apply w-1 h-1;
+}
+::-webkit-scrollbar-button {
+  @apply w-0 h-0;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:active, ::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-500 rounded-full;
+}
+
+::-webkit-scrollbar-track:active, ::-webkit-scrollbar-track:hover, ::-webkit-scrollbar-track {
+  @apply bg-slate-300 rounded-full;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+@layer components {
+  .prose-config {
+    @apply prose prose-sm prose-slate max-w-2xl;
+  }
+
+  .editor-container {
+    @apply w-full relative prose-config rounded-md overflow-hidden shadow-2xl;
+  }
+  .editor-content {
+    @apply relative w-full h-full outline-none bg-white p-7 prose-config px-7;
+  }
+  .editor-placeholder {
+    @apply absolute inset-7 select-none pointer-events-none prose-config;
+  }
+
+  /* DraggableBlocks */
+  .draggable-block-menu {
+    @apply rounded-sm py-1 px-0.5 opacity-0 absolute top-0 left-0 will-change-transform cursor-grab;
+  }
+
+  .draggable-block-menu .icon {
+    @apply w-4 h-4;
+    opacity: 0.3;
+    background-image: url(../public/draggable-block-menu.svg);
+  }
+  .draggable-block-menu:active {
+    @apply cursor-grabbing;
+  }
+
+  .draggable-block-menu:hover {
+    @apply bg-slate-200;
+  }
+
+  .draggable-block-target-line {
+    @apply pointer-events-none bg-amber-400 h-0.5 absolute top-0 left-0 opacity-0 will-change-transform;
+  }
+
+}
+
+@layer base {
+  .editor-content p:first-child {
+    @apply !m-0;
+  }
+}
+
+@layer utilities {
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
+  }
+}
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
