@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Create a preset
+# Creating a preset
 
 In this short tutorial, you will learn how to create your own preset and use it in Writebot. If you don't know what a preset is, it is explained in ["What is a preset?"](what-is-a-preset.mdx).
 
@@ -77,6 +77,10 @@ const makeQuery = ({ tone, movieTitle, rating }: Infer<typeof params>) => {
 </TabItem>
 </Tabs>
 ```
+
+#### Multiple queries
+
+If you send an array of strings, it will return an array of OpenAI responses.
 
 ### Config
 
