@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Writebot Blog</title>
+        <link>https://writebot.app/blog</link>
+        <description>Writebot Blog</description>
+        <lastBuildDate>Thu, 26 Aug 2021 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <item>
+            <title><![CDATA[Welcome]]></title>
+            <link>https://writebot.app/blog/welcome</link>
+            <guid>welcome</guid>
+            <pubDate>Thu, 26 Aug 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[This section is soon to come. This blog will be filled with articles Writebot has written.]]></description>
+            <content:encoded><![CDATA[<p>This section is soon to come. This blog will be filled with articles Writebot has written.</p>]]></content:encoded>
+            <category>hello</category>
+            <category>writebot</category>
+        </item>
+    </channel>
+</rss>

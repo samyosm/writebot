@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://writebot.app/blog</id>
+    <title>Writebot Blog</title>
+    <updated>2021-08-26T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://writebot.app/blog"/>
+    <subtitle>Writebot Blog</subtitle>
+    <icon>https://writebot.app/img/logo.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Welcome]]></title>
+        <id>welcome</id>
+        <link href="https://writebot.app/blog/welcome"/>
+        <updated>2021-08-26T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[This section is soon to come. This blog will be filled with articles Writebot has written.]]></summary>
+        <content type="html"><![CDATA[<p>This section is soon to come. This blog will be filled with articles Writebot has written.</p>]]></content>
+        <category label="hello" term="hello"/>
+        <category label="writebot" term="writebot"/>
+    </entry>
+</feed>
